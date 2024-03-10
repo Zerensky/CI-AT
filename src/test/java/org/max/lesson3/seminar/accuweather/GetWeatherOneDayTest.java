@@ -12,7 +12,8 @@ import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
-public class GetWeatherFiveDayTest extends AccuweatherAbstractTest {
+
+class GetWeatherOneDayTest extends AccuweatherAbstractTest {
 
     @Test
     void getWeatherFiveDay_shouldReturn() {
@@ -20,7 +21,7 @@ public class GetWeatherFiveDayTest extends AccuweatherAbstractTest {
         Weather response = given()
                 .queryParam("apikey", getApiKey())
                 .when()
-                .get(getBaseUrl()+"/forecasts/v1/daily/5day/290396")
+                .get(getBaseUrl()+"/forecasts/v1/daily/1day/222844")
                 .then()
                 .statusCode(200)
                 .time(Matchers.lessThan(2000l))
@@ -28,23 +29,24 @@ public class GetWeatherFiveDayTest extends AccuweatherAbstractTest {
                 .response()
                 .body().as(Weather.class);
 
-        Assertions.assertEquals(5,response.getDailyForecasts().size());
+        Assertions.assertEquals(1,response.getDailyForecasts().size());
         Assertions.assertNotNull(response.getHeadline());
     }
+
     @Test
     void getDailyForecastsList() {
 
         List<DailyForecast> response = given()
                 .queryParam("apikey", getApiKey())
                 .when()
-                .get(getBaseUrl()+"/forecasts/v1/daily/5day/290396")
+                .get(getBaseUrl()+"/forecasts/v1/daily/1day/222844")
                 .then()
                 .statusCode(200)
                 .time(Matchers.lessThan(2000l))
                 .extract()
                 .response()
                 .body().jsonPath().getList("DailyForecasts", DailyForecast.class);
-        Assertions.assertEquals(5, response.size());
+        Assertions.assertEquals(1, response.size());
     }
 
     @Test
@@ -52,7 +54,7 @@ public class GetWeatherFiveDayTest extends AccuweatherAbstractTest {
         String response = given()
                 .queryParam("apikey", getApiKey())
                 .when()
-                .get(getBaseUrl()+"/forecasts/v1/daily/5day/290396")
+                .get(getBaseUrl()+"/forecasts/v1/daily/1day/222844")
                 .then()
                 .statusCode(200)
                 .time(Matchers.lessThan(2000l))
@@ -60,4 +62,5 @@ public class GetWeatherFiveDayTest extends AccuweatherAbstractTest {
         Assertions.assertTrue(response.contains("Headline"));
         Assertions.assertTrue(response.contains("DailyForecasts"));
     }
+
 }

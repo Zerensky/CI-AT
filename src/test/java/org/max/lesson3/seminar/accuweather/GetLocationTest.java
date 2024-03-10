@@ -28,4 +28,22 @@ public class GetLocationTest extends AccuweatherAbstractTest {
         Assertions.assertEquals(10,response.size());
         Assertions.assertEquals("Samara", response.get(0).getLocalizedName());
     }
+
+    @Test
+    void getLocation_autocomplete_returnBishkek() {
+
+        List<Location> response = given()
+                .queryParam("apikey", getApiKey())
+                .when()
+                .get(getBaseUrl()+"/locations/v1/cities/autocomplete?q=Bishkek")
+                .then()
+                .statusCode(200)
+                .time(Matchers.lessThan(2000l))
+                .extract()
+                .body().jsonPath().getList(".", Location.class);
+
+        Assertions.assertEquals(1,response.size());
+        Assertions.assertEquals("Bishkek", response.get(0).getLocalizedName());
+    }
+
 }
