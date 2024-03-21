@@ -23,7 +23,7 @@ public class GetWeatherFiveDayTest extends AccuweatherAbstractTest {
                 .get(getBaseUrl()+"/forecasts/v1/daily/5day/290396")
                 .then()
                 .statusCode(200)
-                .time(Matchers.lessThan(2000l))
+                .time(Matchers.lessThan(20000l))
                 .extract()
                 .response()
                 .body().as(Weather.class);

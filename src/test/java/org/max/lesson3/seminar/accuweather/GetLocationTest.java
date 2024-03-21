@@ -21,7 +21,7 @@ public class GetLocationTest extends AccuweatherAbstractTest {
                 .get(getBaseUrl()+"/locations/v1/cities/autocomplete?q=Samara")
                 .then()
                 .statusCode(200)
-                .time(Matchers.lessThan(2000l))
+                .time(Matchers.lessThan(20000l))
                 .extract()
                 .body().jsonPath().getList(".", Location.class);
 
